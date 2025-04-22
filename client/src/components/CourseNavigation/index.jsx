@@ -6,29 +6,35 @@ import { useSelector } from 'react-redux'
 import useCoursePrivilege from '../../hooks/useCourseprivilege'
 
 const CourseMenu = ({ url, privilege }) => {
-  return (
-    <Menu>
-      <Menu.Item>
-        <Link to={`${url}/announcments`}>Announcments</Link>
-      </Menu.Item>
-      <Menu.Item>
-        <Link to={`${url}/gradebook`}>GradeBook</Link>
-      </Menu.Item>
-      <Menu.Item>
-        <Link to={`${url}/discussions`}>Discussions</Link>
-      </Menu.Item>
-      {privilege !== 'student' && (
-        <Menu.Item>
-          <Link to={`${url}/particpants`}>Particpants</Link>
-        </Menu.Item>
-      )}
-      {privilege !== 'student' && (
-        <Menu.Item>
-          <Link to={`${url}/settings`}>Settings</Link>
-        </Menu.Item>
-      )}
-    </Menu>
-  )
+  const menuItems = [
+    {
+      key: 'announcements',
+      label: <Link to={`${url}/announcments`}>Announcments</Link>
+    },
+    {
+      key: 'gradebook',
+      label: <Link to={`${url}/gradebook`}>GradeBook</Link>
+    },
+    {
+      key: 'discussions',
+      label: <Link to={`${url}/discussions`}>Discussions</Link>
+    }
+  ]
+
+  if (privilege !== 'student') {
+    menuItems.push(
+      {
+        key: 'participants',
+        label: <Link to={`${url}/particpants`}>Particpants</Link>
+      },
+      {
+        key: 'settings',
+        label: <Link to={`${url}/settings`}>Settings</Link>
+      }
+    )
+  }
+
+  return <Menu items={menuItems} />
 }
 
 const CourseNavigation = () => {
@@ -49,7 +55,7 @@ const CourseNavigation = () => {
   if (!course) return null
 
   return (
-    <>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
       <Space>
         <Button
           shape="circle"
@@ -58,8 +64,8 @@ const CourseNavigation = () => {
           icon={<ArrowLeftOutlined />}
         />
         <Dropdown
-          overlay={<CourseMenu url={url} privilege={privilege} />}
-          placement="bottomCenter"
+          menu={{ items: <CourseMenu url={url} privilege={privilege} /> }}
+          placement="bottom"
         >
           <Button shape="round" style={{ backgroundColor: course.backgroundColor }}>
             <span style={{ fontWeight: 600, color: 'white' }}>{course.name}</span>{' '}
@@ -67,19 +73,37 @@ const CourseNavigation = () => {
           </Button>
         </Dropdown>
       </Space>
-      <NavLink to={`${url}/modules`}>
-        <Button type="text">Modules</Button>
-      </NavLink>
-      <NavLink to={`${url}/lectures`}>
-        <Button type="text">Lectures</Button>
-      </NavLink>
-      <NavLink to={`${url}/assignments`}>
-        <Button type="text">Assignments</Button>
-      </NavLink>
-      <NavLink to={`${url}/exams`}>
-        <Button type="text">Exams</Button>
-      </NavLink>
-    </>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <NavLink to={`${url}/modules`}>
+          {(props) => (
+            <Button type="text" {...props}>
+              Modules
+            </Button>
+          )}
+        </NavLink>
+        <NavLink to={`${url}/lectures`}>
+          {(props) => (
+            <Button type="text" {...props}>
+              Lectures
+            </Button>
+          )}
+        </NavLink>
+        <NavLink to={`${url}/assignments`}>
+          {(props) => (
+            <Button type="text" {...props}>
+              Assignments
+            </Button>
+          )}
+        </NavLink>
+        <NavLink to={`${url}/exams`}>
+          {(props) => (
+            <Button type="text" {...props}>
+              Exams
+            </Button>
+          )}
+        </NavLink>
+      </div>
+    </div>
   )
 }
 

@@ -57,7 +57,7 @@ const ModuleItem = ({ item, instructorAccess, removeModuleItem }) => {
       onClick={() => {
         if (type === 'file') window.open(url, '_parent')
         else {
-          navigate.push(`/app/course/${courseId}/lectures/${item.id}`)
+          navigate(`/app/course/${courseId}/lectures/${item.id}`)
         }
       }}
     >

@@ -16,19 +16,23 @@ const ProfileIcon = () => {
     }
   }
 
-  const menu = (
-    <Menu onClick={clickHandler}>
-      <Menu.Item key="PROFILE">
-        <NavLink to={'/app/profile'}>My Profile</NavLink>
-      </Menu.Item>
-      <Menu.Item key="SIGN_OUT">Sign out</Menu.Item>
-    </Menu>
-  )
-
+  const menuItems = [
+    {
+      key: 'PROFILE',
+      label: <NavLink to="/app/profile">My Profile</NavLink>,
+    },
+    {
+      key: 'SIGN_OUT',
+      label: 'Sign out',
+    },
+  ];
+  
+  const menu = <Menu onClick={clickHandler} items={menuItems} />;
+  
   return (
     <Dropdown
       style={{}}
-      overlay={menu}
+      menu={menu}
       trigger={['click']}
       placement="topRight"
       arrow

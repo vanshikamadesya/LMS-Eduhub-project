@@ -55,7 +55,7 @@ const MyBookMarks = () => {
               shape="round"
               type="secondary"
               onClick={() => {
-                navigate.push(`/app/myarticle`)
+                navigate(`/app/myarticle`)
               }}
             >
               My Articles
@@ -134,7 +134,7 @@ const MyArticleCard = ({ article }) => {
   }
 
   const viewArticle = () => {
-    navigate.push(`/app/articles/${article.id}`)
+    navigate(`/app/articles/${article.id}`)
   }
   const user = useSelector((state) => state.auth.user)
 

@@ -41,7 +41,7 @@ const Archives = (props) => {
             <CourseCard
               course={course}
               disableEnroll
-              onClick={() => navigate.push(`/app/course/${course.id}/modules`)}
+              onClick={() => navigate(`/app/course/${course.id}/modules`)}
             />
           </List.Item>
         )}

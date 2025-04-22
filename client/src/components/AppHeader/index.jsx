@@ -10,15 +10,17 @@ import styled from 'styled-components'
 const FlexedDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  padding: 0 32px;
+  align-items: center;
+  padding: 16px 32px;
   background: #fff;
 `
 
 const AppHeader = ({ courseNavigation }) => {
   return (
     <FlexedDiv>
-      <Space>{courseNavigation && <CourseNavigation />}</Space>
+      <div style={{ flex: 1 }}>
+        {courseNavigation && <CourseNavigation />}
+      </div>
       <Space>
         <DropDownNotification />
         <ProfileIcon />

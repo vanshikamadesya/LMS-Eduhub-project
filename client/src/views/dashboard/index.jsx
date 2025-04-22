@@ -76,7 +76,7 @@ const Dashboard = () => {
   };
 
   const handleCourseCardClick = (courseId) => {
-    navigate.push(`/app/course/${courseId}/modules`);
+    navigate(`/app/course/${courseId}/modules`);
   };
 
   if (loading) return <Spinner size="large" />;
@@ -99,7 +99,7 @@ const Dashboard = () => {
 
       <Modal
         title="Add New Course"
-        visible={modalVisible}
+        open={modalVisible}
         onOk={form.submit}
         onCancel={handleCancel}
         footer={[
@@ -144,7 +144,6 @@ const Dashboard = () => {
 
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={24} md={24} lg={16} xl={19}>
-          {/* might refactor this in it's own component */}
           <div style={{ marginTop: "8px" }}>
             <Collapse
               expandIcon={({ isActive }) => (
@@ -152,32 +151,37 @@ const Dashboard = () => {
               )}
               defaultActiveKey={["1"]}
               ghost
-            >
-              <Collapse.Panel header={<Text strong>My Courses</Text>} key="1">
-                <List
-                  grid={{
-                    gutter: 24,
-                    column: 2,
-                    xs: 1,
-                    sm: 2,
-                    xxl: 4,
-                  }}
-                  dataSource={enrolledCourses}
-                  renderItem={(course) => (
-                    <List.Item>
-                      <CourseCard
-                        course={course}
-                        removeCourse={() => removeCourse(course.id)}
-                        handleUnenroll={() =>
-                          handleUnenroll(course.id, user._id)
-                        }
-                        onClick={() => handleCourseCardClick(course.id)}
-                      />
-                    </List.Item>
-                  )}
-                />
-              </Collapse.Panel>
-            </Collapse>
+              items={[
+                {
+                  key: "1",
+                  label: <Text strong>My Courses</Text>,
+                  children: (
+                    <List
+                      grid={{
+                        gutter: 24,
+                        column: 2,
+                        xs: 1,
+                        sm: 2,
+                        xxl: 4,
+                      }}
+                      dataSource={enrolledCourses}
+                      renderItem={(course) => (
+                        <List.Item>
+                          <CourseCard
+                            course={course}
+                            removeCourse={() => removeCourse(course.id)}
+                            handleUnenroll={() =>
+                              handleUnenroll(course.id, user._id)
+                            }
+                            onClick={() => handleCourseCardClick(course.id)}
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  ),
+                },
+              ]}
+            />
           </div>
         </Col>
 
@@ -210,6 +214,9 @@ const DeadlinesViewer = (props) => {
 
   if (loading) return <Spinner size="large" />;
 
+  // Ensure deadlines is always an array
+  const deadlinesList = Array.isArray(deadlines) ? deadlines : [];
+
   return (
     <DeadLinesContainer>
       <div
@@ -228,7 +235,7 @@ const DeadlinesViewer = (props) => {
       </div>
       <List
         style={{ maxHeight: "445px", overflow: "hidden", overflowY: "auto" }}
-        dataSource={(deadlines || []).filter((item) => {
+        dataSource={deadlinesList.filter((item) => {
           return DateTime.fromISO(item.deadline) >= DateTime.now();
         })}
         locale={{

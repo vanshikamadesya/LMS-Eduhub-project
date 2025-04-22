@@ -136,7 +136,7 @@ const AssessmentOptionsMenu = (props) => {
             </Button>
             <Button
               onClick={() =>
-                navigate.push(
+                navigate(
                   `/app/course/${courseId}/${assessmentType.toLowerCase()}s`
                 )
               }

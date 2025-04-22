@@ -34,7 +34,7 @@ const Exams = () => {
         <Title level={3}>All Exams</Title>
         {enrolled && privilege !== STUDENT && (
           <Button
-            onClick={() => navigate.push(`/app/course/${courseId}/exams/create`)}
+            onClick={() => navigate(`/app/course/${courseId}/exams/create`)}
             type="dashed"
             shape="round"
             icon={<PlusOutlined />}
@@ -89,24 +89,33 @@ const ExamItem = ({ exam, disabled }) => {
   const { privilege } = useCoursePrivilege()
   const dispatch = useDispatch()
 
-  const optionMenu = (
-    <Menu>
-      <Menu.Item>
+  const optionMenuItems = [
+    {
+      key: 'gradeAll',
+      label: (
         <Link to={`/app/course/${courseId}/assessment/${exam.id}/grade`}>
           Grade All
         </Link>
-      </Menu.Item>
-      <Menu.Item>
+      ),
+    },
+    {
+      key: 'allSubmissions',
+      label: (
         <Link to={`/app/course/${courseId}/assessment/${exam.id}/submissions`}>
           All Submissions
         </Link>
-      </Menu.Item>
-      <Menu.Item danger onClick={() => dispatch(deleteExam(courseId, exam.id))}>
-        Delete
-      </Menu.Item>
-    </Menu>
-  )
-
+      ),
+    },
+    {
+      key: 'delete',
+      danger: true,
+      label: 'Delete',
+      onClick: () => dispatch(deleteExam(courseId, exam.id)),
+    },
+  ];
+  
+  const optionMenu = <Menu items={optionMenuItems} />;
+  
   const getActions = (privilege) => {
     if (privilege !== STUDENT)
       return (
@@ -120,7 +129,7 @@ const ExamItem = ({ exam, disabled }) => {
               trigger={['click']}
               placement="bottomLeft"
               type="text"
-              overlay={optionMenu}
+              menu={optionMenu}
             ></Dropdown.Button>
           </Space>
         </>

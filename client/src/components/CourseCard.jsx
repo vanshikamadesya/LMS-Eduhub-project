@@ -76,21 +76,27 @@ const CourseCard = (props) => {
 
   const loadingEnroll = course.loadingEnroll
 
-  const optionMenu = (
-    <Menu>
-      {privilege === 'student' && <Menu.Item>Review Course</Menu.Item>}
-      {(privilege === 'instructor' || privilege === 'admin') && (
-        <Menu.Item onClick={removeCourse} danger>
-          Delete Course
-        </Menu.Item>
-      )}
-    </Menu>
-  )
+  const menuItems = [
+    ...(privilege === 'student' ? [
+      {
+        key: 'review',
+        label: 'Review Course'
+      }
+    ] : []),
+    ...(privilege === 'instructor' || privilege === 'admin' ? [
+      {
+        key: 'delete',
+        label: 'Delete Course',
+        danger: true,
+        onClick: removeCourse
+      }
+    ] : [])
+  ]
 
   return (
     <Card
       hoverable
-      bordered={false}
+      variant="borderless"
       cover={
         <CourseImage
           image={course.image}
@@ -110,9 +116,9 @@ const CourseCard = (props) => {
             >
               {enrolled && !disableEnroll && (
                 <Dropdown.Button
-                  placement="bottomCenter"
+                  placement="bottom"
                   type="text"
-                  overlay={optionMenu}
+                  menu={{ items: menuItems }}
                 ></Dropdown.Button>
               )}
             </span>

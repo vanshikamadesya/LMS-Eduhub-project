@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Typography, Button, Modal, Form, Input, List } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { FlexSectionHeader } from '../style'
+import { useParams } from 'react-router-dom';
 
 import { STUDENT } from '../../constants/userRoles'
 import ModuleList from './components/ModuleList'
@@ -25,7 +26,7 @@ const Modules = (props) => {
   const modules = useSelector((state) => state.modules)
   const { enrolled, privilege } = useCoursePrivilege()
 
-  const { courseId } = props.match.params
+  const { courseId } = useParams()
 
   const dispatch = useDispatch()
 
@@ -80,7 +81,7 @@ const Modules = (props) => {
 
       <Modal
         title="Add New Module"
-        visible={addModalActive}
+        open={addModalActive}
         onOk={form.submit}
         onCancel={handleCancel}
         footer={[

@@ -29,7 +29,7 @@ const CourseCalendar = () => {
     return listData
   }
 
-  function dateCellRender(value) {
+  function dateCellContent(value) {
     const listData = getListData(value)
     return (
       <ul className="events">
@@ -55,7 +55,12 @@ const CourseCalendar = () => {
       <Title level={3}>Calendar</Title>
       <Calendar
         style={{ padding: '0 20px', marginTop: '16px' }}
-        dateCellRender={dateCellRender}
+        cellRender={(value, info) => {
+          if (info.type === 'date') {
+            return dateCellContent(value);
+          }
+          return info.originNode;
+        }}
       />
     </>
   )

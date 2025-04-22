@@ -45,7 +45,7 @@ const CourseSettings = (props) => {
   }
 
   const handleCourseEnd = () => {
-    dispatch(endCourse(courseId)).then(() => navigate.push('/app/courses'))
+    dispatch(endCourse(courseId)).then(() => navigate('/app/courses'))
   }
 
   if (loading) return <Spinner size="large" />

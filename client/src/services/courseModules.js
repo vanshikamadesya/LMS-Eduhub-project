@@ -3,7 +3,7 @@ import { getAuthHeader } from './config'
 
 import { baseURL as coursesURL } from './courses'
 
-const baseURL = '/modules'
+const baseURL = '/modules' 
 
 const getModulesURL = (courseId, moduleId) => {
   if (!moduleId) return `${coursesURL}/${courseId}${baseURL}`

@@ -24,6 +24,44 @@ const SideNav = (props) => {
   if (currentPath.includes('/app/course/'))
     currentPath = currentPath.replace('/app/course/', '/app/courses/')
 
+  const menuItems = [
+    {
+      key: '/app/dashboard',
+      icon: <DashboardOutlined />,
+      label: <NavLink to="/app/dashboard">Dashboard</NavLink>
+    },
+    {
+      key: '/app/courses',
+      icon: <ImBooks />,
+      label: <NavLink to="/app/courses">Courses</NavLink>
+    },
+    {
+      key: '/app/calendar',
+      icon: <CalendarOutlined />,
+      label: <NavLink to="/app/calendar">Calendar</NavLink>
+    },
+    {
+      key: '/app/articles',
+      icon: <RiArticleLine />,
+      label: <NavLink to="/app/articles">Articles</NavLink>
+    },
+    {
+      key: '/app/acheivements',
+      icon: <CrownOutlined />,
+      label: <NavLink to="/app/acheivements">Achievements</NavLink>
+    },
+    {
+      key: '/app/archives',
+      icon: <HddOutlined />,
+      label: <NavLink to="/app/archives">Archives</NavLink>
+    },
+    {
+      key: '/app/profile',
+      icon: <UserOutlined />,
+      label: <NavLink to="/app/profile">Profile</NavLink>
+    }
+  ]
+
   return (
     <Sider
       collapsible
@@ -46,35 +84,9 @@ const SideNav = (props) => {
       <Menu
         theme="dark"
         mode="inline"
-        activeKey={currentPath}
-        selectedKeys={currentPath}
-      >
-        <Menu.Item key="/app/dashboard" icon={<DashboardOutlined />}>
-          <NavLink to="/app/dashboard">Dashboard</NavLink>
-        </Menu.Item>
-        <Menu.Item key="/app/courses" icon={<ImBooks />}>
-          <NavLink to="/app/courses">Courses</NavLink>
-        </Menu.Item>
-        <Menu.Item key="/app/calendar" icon={<CalendarOutlined />}>
-          <NavLink to="/app/calendar">Calendar</NavLink>
-        </Menu.Item>
-        <Menu.Item key="/app/articles" icon={<RiArticleLine />}>
-          <NavLink to="/app/articles">Articles</NavLink>
-        </Menu.Item>
-        {/* <SubMenu key="sub1" icon={<TeamOutlined />} title="Groups">
-          <Menu.Item key="5">Place Holder 1</Menu.Item>
-          <Menu.Item key="6">Place Holder 2</Menu.Item>
-        </SubMenu> */}
-        <Menu.Item key="/app/acheivements" icon={<CrownOutlined />}>
-          <NavLink to="/app/acheivements">Acheivements</NavLink>
-        </Menu.Item>
-        <Menu.Item key="/app/archives" icon={<HddOutlined />}>
-          <NavLink to="/app/archives">Archives</NavLink>
-        </Menu.Item>
-        <Menu.Item key="/app/profile" icon={<UserOutlined />}>
-          <NavLink to="/app/profile">Profile</NavLink>
-        </Menu.Item>
-      </Menu>
+        selectedKeys={[currentPath]}
+        items={menuItems}
+      />
     </Sider>
   )
 }

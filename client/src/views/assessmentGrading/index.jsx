@@ -274,7 +274,7 @@ const GradingPage = (props) => {
                 </Button>
                 <Button
                   onClick={() =>
-                    navigate.push(
+                    navigate(
                       `/app/course/${courseId}/${assessment.type.toLowerCase()}s`
                     )
                   }

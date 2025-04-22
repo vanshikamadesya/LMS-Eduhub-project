@@ -107,7 +107,7 @@ const DropDownNotification = () => {
 
   return (
     <div className="dropdown-div">
-      <Dropdown overlay={notificationList} placement="bottomRight" trigger={['click']}>
+      <Dropdown menu={notificationList} placement="bottomRight" trigger={['click']}>
         <Badge count={notifications.length} overflowCount={99}>
           <BellFilled style={{ fontSize: 20, cursor: 'pointer' }} />
         </Badge>

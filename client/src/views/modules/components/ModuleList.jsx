@@ -32,11 +32,59 @@ const ModuleList = (props) => {
     setEditModalActive(false)
   }
 
+  const items = [
+    {
+      key: '1',
+      label: <Typography.Text strong>{module.title}</Typography.Text>,
+      extra: instructorAccess && (
+        <Space
+          onClick={(event) => {
+            event.stopPropagation()
+          }}
+        >
+          <Button
+            type="text"
+            icon={<EditOutlined />}
+            onClick={() => {
+              setEditModalActive(true)
+            }}
+          />
+          <Button
+            type="text"
+            icon={<DeleteOutlined />}
+            danger
+            onClick={() => removeModule(module.id)}
+          />
+        </Space>
+      ),
+      children: (
+        <>
+          <List
+            locale={{ emptyText: 'no items' }}
+            dataSource={module.moduleItems}
+            renderItem={(item) => (
+              <ModuleItem
+                removeModuleItem={removeModuleItem}
+                item={item}
+                instructorAccess={instructorAccess}
+              />
+            )}
+          />
+          <ModuleItemForm
+            addModuleItem={addModuleItem}
+            instructorAccess={instructorAccess}
+            loadingUpload={loadingUpload}
+          />
+        </>
+      )
+    }
+  ]
+
   return (
     <>
       <Modal
         title="Edit Module"
-        visible={editModalActive}
+        open={editModalActive}
         onOk={form.submit}
         onCancel={handleCancel}
         footer={[
@@ -70,6 +118,7 @@ const ModuleList = (props) => {
           </Form.Item>
         </Form>
       </Modal>
+
       <Collapse
         style={{
           borderRadius: '10px',
@@ -78,55 +127,9 @@ const ModuleList = (props) => {
           border: '0px'
         }}
         defaultActiveKey={['1']}
-        expandIconPosition={'left'}
-      >
-        <Collapse.Panel
-          header={<Typography.Text strong>{module.title}</Typography.Text>}
-          bordered={false}
-          key="1"
-          extra={
-            instructorAccess && (
-              <Space
-                onClick={(event) => {
-                  // If you don't want click extra trigger collapse, you can prevent this:
-                  event.stopPropagation()
-                }}
-              >
-                <Button
-                  type="text"
-                  icon={<EditOutlined />}
-                  onClick={() => {
-                    setEditModalActive(true)
-                  }}
-                />
-                <Button
-                  type="text"
-                  icon={<DeleteOutlined />}
-                  danger
-                  onClick={() => removeModule(module.id)}
-                />
-              </Space>
-            )
-          }
-        >
-          <List
-            locale={{ emptyText: 'no items' }}
-            dataSource={module.moduleItems}
-            renderItem={(item) => (
-              <ModuleItem
-                removeModuleItem={removeModuleItem}
-                item={item}
-                instructorAccess={instructorAccess}
-              />
-            )}
-          ></List>
-          <ModuleItemForm
-            addModuleItem={addModuleItem}
-            instructorAccess={instructorAccess}
-            loadingUpload={loadingUpload}
-          />
-        </Collapse.Panel>
-      </Collapse>
+        expandIconPosition={'start'}
+        items={items}
+      />
     </>
   )
 }

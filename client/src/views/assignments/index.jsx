@@ -38,7 +38,7 @@ const Assignments = () => {
         {enrolled && privilege !== STUDENT && (
           <Button
             onClick={() =>
-              navigate.push(`/app/course/${courseId}/assignments/create`)
+              navigate(`/app/course/${courseId}/assignments/create`)
             }
             type="dashed"
             shape="round"
@@ -79,28 +79,33 @@ const AssignmentItem = ({ assignment, disabled }) => {
 
   const navigate = useNavigate()
 
-  const optionMenu = (
-    <Menu>
-      <Menu.Item>
+  const optionMenuItems = [
+    {
+      key: 'gradeAll',
+      label: (
         <Link to={`/app/course/${courseId}/assessment/${assignment.id}/grade`}>
           Grade All
         </Link>
-      </Menu.Item>
-      <Menu.Item>
-        <Link
-          to={`/app/course/${courseId}/assessment/${assignment.id}/submissions`}
-        >
+      ),
+    },
+    {
+      key: 'allSubmissions',
+      label: (
+        <Link to={`/app/course/${courseId}/assessment/${assignment.id}/submissions`}>
           All Submissions
         </Link>
-      </Menu.Item>
-      <Menu.Item
-        danger
-        onClick={() => dispatch(deleteAssignment(courseId, assignment.id))}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  )
+      ),
+    },
+    {
+      key: 'delete',
+      danger: true,
+      label: 'Delete',
+      onClick: () => dispatch(deleteAssignment(courseId, assignment.id)),
+    },
+  ];
+  
+  const optionMenu = <Menu items={optionMenuItems} />;
+  
 
   const getActions = (privilege) => {
     if (privilege !== STUDENT)
@@ -115,7 +120,7 @@ const AssignmentItem = ({ assignment, disabled }) => {
               trigger={['click']}
               placement="bottomLeft"
               type="text"
-              overlay={optionMenu}
+              menu={optionMenu}
             ></Dropdown.Button>
           </Space>
         </>
@@ -125,7 +130,7 @@ const AssignmentItem = ({ assignment, disabled }) => {
   return (
     <StyledListItem
       onClick={() =>
-        navigate.push(`/app/course/${courseId}/assignment/${assignment.id}`)
+        navigate(`/app/course/${courseId}/assignment/${assignment.id}`)
       }
       extra={getActions(privilege)}
     >

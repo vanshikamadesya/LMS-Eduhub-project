@@ -117,14 +117,23 @@ const AuthenticatedApp = () => {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="calendar" element={<CourseCalendar />} />
             <Route path="courses" element={<Courses />} />
-            <Route
-              path="course/:courseId/modules"
+            {/* <Route path="course/:courseId/modules" element={<CourseRoute><Modules /></CourseRoute>}/> */}
+            <Route 
+              path="course/:courseId/*" 
               element={
                 <CourseRoute>
-                  <Modules />
+                  <Routes>
+                    <Route path="modules" element={<Modules />} />
+                    <Route path="lectures" element={<Lectures />} />
+                    <Route path="lectures/:lectureId" element={<Lectures />} />
+                    <Route path=""/>
+                  </Routes>
                 </CourseRoute>
               }
             />
+
+
+
             {/* <CourseRoute
               path="/app/course/:courseId/assessment/:assessmentId/submissions"
               element={<Submissions />}

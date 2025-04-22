@@ -69,7 +69,7 @@ const AssessmentCreation = (props) => {
 
     dispatch(submitAssessment(courseId, assessment)).then(() => {
       const location = assessmentType === 'Exam' ? 'exams' : 'assignments'
-      navigate.push(`/app/course/${courseId}/${location}`)
+      navigate(`/app/course/${courseId}/${location}`)
     })
   }
 
