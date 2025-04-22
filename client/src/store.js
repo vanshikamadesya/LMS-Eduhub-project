@@ -1,5 +1,5 @@
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { combineReducers, createStore, applyMiddleware } from 'redux'
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import { thunk } from 'redux-thunk'
 import logger from 'redux-logger'
 
@@ -44,6 +44,11 @@ const persistConfig = {
     'modules'
   ]
 }
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+
+
 
 const reducer = combineReducers({
   auth: authReducer,
