@@ -8,7 +8,7 @@ import {
   submitAssessment
 } from '../../../reducers/assessmentCreationReducer'
 
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import AssessmentOptionsMenu from './AssessmentOptionsMenu'
 import AssessmentQuestionsSection from './AssessmentQuestionsSection'

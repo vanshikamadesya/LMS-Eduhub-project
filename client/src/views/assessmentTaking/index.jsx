@@ -1,5 +1,5 @@
 import SpyLogic from './components/spyLogic'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import useBlockNavigation from './useBlockNavigation'
 import './styles.css'
 import { Affix, Col, Modal, Row } from 'antd'
