@@ -8,12 +8,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { PlusOutlined } from '@ant-design/icons'
 import { STUDENT } from '../../constants/userRoles'
 import { deleteExam, getAllExams } from '../../reducers/examReducer'
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 import { AiOutlineSolution } from 'react-icons/ai'
 
 import useCoursePrivilege from '../../hooks/useCourseprivilege'
-import { Link } from 'react-router-dom'
 
 const { Title, Text } = Typography
 

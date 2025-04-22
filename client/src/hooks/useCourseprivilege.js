@@ -1,18 +1,18 @@
-import { useSelector } from 'react-redux'
-import { useParams } from 'react-router'
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const useCoursePrivilege = (id) => {
-  const params = useParams()
-  const courseId = id || params.courseId
+  const params = useParams();
+  const courseId = id || params.courseId;
 
-  const courses = useSelector((state) => state.courses.data)
+  const courses = useSelector((state) => state.courses.data);
 
-  const currentCourse = courses.find((course) => course.id === courseId)
+  const currentCourse = courses.find((course) => course.id === courseId);
 
   const { enrolled, privilege } =
-    currentCourse !== undefined ? currentCourse : { enrolled: false }
+    currentCourse !== undefined ? currentCourse : { enrolled: false };
 
-  return { enrolled, privilege }
-}
+  return { enrolled, privilege };
+};
 
-export default useCoursePrivilege
+export default useCoursePrivilege;

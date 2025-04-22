@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import styled from 'styled-components'
+import styled from "styled-components";
 
-import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons'
+import { PlusOutlined, CaretRightOutlined } from "@ant-design/icons";
 import {
   Button,
   Col,
@@ -14,72 +14,72 @@ import {
   List,
   Modal,
   Row,
-  Typography
-} from 'antd'
-import { FlexSectionHeader } from '../style'
+  Typography,
+} from "antd";
+import { FlexSectionHeader } from "../style";
 
-import { STUDENT } from '../../constants/userRoles'
+import { STUDENT } from "../../constants/userRoles";
 
 import {
   createCourse,
   getAllCourses,
   deleteCourse,
-  unEnroll
-} from '../../reducers/courseReducer'
-import Spinner from '../../components/Spinner'
-import CourseCard from '../../components/CourseCard'
-import { useNavigate } from 'react-router'
-import { getAllDeadlines } from '../../reducers/deadlinesReducer'
-import { DateTime } from 'luxon'
+  unEnroll,
+} from "../../reducers/courseReducer";
+import Spinner from "../../components/Spinner";
+import CourseCard from "../../components/CourseCard";
+import { useNavigate } from "react-router-dom";
+import { getAllDeadlines } from "../../reducers/deadlinesReducer";
+import { DateTime } from "luxon";
 
-import { FileTextOutlined } from '@ant-design/icons'
-import { AiOutlineSolution } from 'react-icons/ai'
+import { FileTextOutlined } from "@ant-design/icons";
+import { AiOutlineSolution } from "react-icons/ai";
 
-const { Title, Text } = Typography
+const { Title, Text } = Typography;
 
 const Dashboard = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getAllCourses())
-    dispatch(getAllDeadlines())
-  }, [dispatch])
+    dispatch(getAllCourses());
+    dispatch(getAllDeadlines());
+  }, [dispatch]);
 
-  const user = useSelector((state) => state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   const courses = useSelector((state) =>
-    state.courses.data.filter((course) => course.status !== 'archived')
-  )
-  const loading = useSelector((state) => state.courses.loading)
-  const deadlines = useSelector((state) => state.deadlines.data)
-  const deadlinesLoading = useSelector((state) => state.deadlines.loading)
+    state.courses.data.filter((course) => course.status !== "archived")
+  );
+  const loading = useSelector((state) => state.courses.loading);
+  const deadlines = useSelector((state) => state.deadlines.data);
+  const deadlinesLoading = useSelector((state) => state.deadlines.loading);
 
-  const [form] = Form.useForm()
-  const [modalVisible, setModalVisible] = useState(false)
+  const [form] = Form.useForm();
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const enrolledCourses = courses.filter((course) => course.enrolled)
+  const enrolledCourses = courses.filter((course) => course.enrolled);
 
   const handleCancel = () => {
-    setModalVisible(false)
-  }
+    setModalVisible(false);
+  };
 
   const addCourse = (course) => {
-    dispatch(createCourse(course))
-  }
+    dispatch(createCourse(course));
+  };
 
   const removeCourse = (courseId) => {
-    dispatch(deleteCourse(courseId))
-  }
+    dispatch(deleteCourse(courseId));
+  };
 
   const handleUnenroll = (courseId, userId) => {
-    dispatch(unEnroll(courseId, userId))
-  }
+    dispatch(unEnroll(courseId, userId));
+  };
 
   const handleCourseCardClick = (courseId) => {
-    navigate.push(`/app/course/${courseId}/modules`)
-  }
+    navigate.push(`/app/course/${courseId}/modules`);
+  };
 
-  if (loading) return <Spinner size="large" />
+  if (loading) return <Spinner size="large" />;
 
   return (
     <>
@@ -108,7 +108,7 @@ const Dashboard = () => {
           </Button>,
           <Button key="submit" type="primary" onClick={form.submit}>
             Submit
-          </Button>
+          </Button>,
         ]}
       >
         <Form
@@ -125,8 +125,8 @@ const Dashboard = () => {
             rules={[
               {
                 required: true,
-                message: 'Please enter the course name'
-              }
+                message: "Please enter the course name",
+              },
             ]}
           >
             <Input placeholder="Course Name" />
@@ -145,12 +145,12 @@ const Dashboard = () => {
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={24} md={24} lg={16} xl={19}>
           {/* might refactor this in it's own component */}
-          <div style={{ marginTop: '8px' }}>
+          <div style={{ marginTop: "8px" }}>
             <Collapse
               expandIcon={({ isActive }) => (
                 <CaretRightOutlined rotate={isActive ? 90 : 0} />
               )}
-              defaultActiveKey={['1']}
+              defaultActiveKey={["1"]}
               ghost
             >
               <Collapse.Panel header={<Text strong>My Courses</Text>} key="1">
@@ -160,7 +160,7 @@ const Dashboard = () => {
                     column: 2,
                     xs: 1,
                     sm: 2,
-                    xxl: 4
+                    xxl: 4,
                   }}
                   dataSource={enrolledCourses}
                   renderItem={(course) => (
@@ -186,8 +186,8 @@ const Dashboard = () => {
         </Col>
       </Row>
     </>
-  )
-}
+  );
+};
 
 const DeadLinesContainer = styled.div`
   height: auto;
@@ -198,78 +198,79 @@ const DeadLinesContainer = styled.div`
   justify-content: center;
   align-items: center; */
   /* margin-top: 66px; */
-`
+`;
 
 const DeadlineItem = styled(List.Item)`
   background-color: #fafafa;
   padding: 20px;
-`
+`;
 
 const DeadlinesViewer = (props) => {
-  const { loading, deadlines } = props
+  const { loading, deadlines } = props;
 
-  if (loading) return <Spinner size="large" />
+  if (loading) return <Spinner size="large" />;
 
   return (
     <DeadLinesContainer>
       <div
         style={{
-          height: '70px',
+          height: "70px",
           backgroundImage:
-            'linear-gradient(rgba(0, 109, 117, 1), rgba(0, 109, 117, 0.3))',
-          color: 'white',
-          padding: '20px',
-          paddingRight: '0px'
+            "linear-gradient(rgba(0, 109, 117, 1), rgba(0, 109, 117, 0.3))",
+          color: "white",
+          padding: "20px",
+          paddingRight: "0px",
         }}
       >
-        <Typography.Title style={{ color: 'white' }} level={4}>
+        <Typography.Title style={{ color: "white" }} level={4}>
           Upcoming Deadlines
         </Typography.Title>
       </div>
       <List
-        style={{ maxHeight: '445px', overflow: 'hidden', overflowY: 'auto' }}
-        dataSource={deadlines.filter((item) => {
-          return DateTime.fromISO(item.deadline) >= DateTime.now()
+        style={{ maxHeight: "445px", overflow: "hidden", overflowY: "auto" }}
+        dataSource={(deadlines || []).filter((item) => {
+          return DateTime.fromISO(item.deadline) >= DateTime.now();
         })}
         locale={{
           emptyText: (
             <Empty
               image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description={'No Deadlines'}
+              description={"No Deadlines"}
             />
-          )
+          ),
         }}
         renderItem={(item) => {
-          const date = DateTime.fromISO(item.deadline)
+          const date = DateTime.fromISO(item.deadline);
           return (
             <DeadlineItem>
               <List.Item.Meta
                 avatar={
-                  item.type === 'Exam' ? (
-                    <AiOutlineSolution style={{ fontSize: '16px' }} />
+                  item.type === "Exam" ? (
+                    <AiOutlineSolution style={{ fontSize: "16px" }} />
                   ) : (
                     <FileTextOutlined />
                   )
                 }
                 title={
                   <a
-                    href={`/app/course/${item.course.id
-                      }/${item.type.toLowerCase()}/${item.assessmentId}`}
+                    href={`/app/course/${
+                      item.course.id
+                    }/${item.type.toLowerCase()}/${item.assessmentId}`}
                   >
                     {item.title}
                   </a>
                 }
                 description={item.course.name}
               />
-              <Text style={{ width: '80px' }} type="secondary">
+              <Text style={{ width: "80px" }} type="secondary">
                 {date.toLocaleString(DateTime.DATETIME_MED)}
               </Text>
             </DeadlineItem>
-          )
+          );
         }}
       />
     </DeadLinesContainer>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

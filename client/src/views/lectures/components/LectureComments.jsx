@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
-import { Form, Button, Input, Typography } from 'antd';
-import Spinner from '../../../components/Spinner';
-import { getAllComments, createComment, deleteComment } from '../../../reducers/lectureCommentsReducer';
-import CustomComment from './CustomComment';
-import styled from 'styled-components';
-import { DateTime } from 'luxon';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { Form, Button, Input, Typography } from "antd";
+import Spinner from "../../../components/Spinner";
+import {
+  getAllComments,
+  createComment,
+  deleteComment,
+} from "../../../reducers/lectureCommentsReducer";
+import CustomComment from "./CustomComment";
+import styled from "styled-components";
+import { DateTime } from "luxon";
 
 export const Container = styled.div`
   background-color: #fafafa;
@@ -22,7 +26,7 @@ const CommentForm = (props) => {
     state.courses?.data?.find((course) => course.id === courseId)
   );
 
-  const { status } = course || { status: 'published' };
+  const { status } = course || { status: "published" };
 
   const handleSubmit = (values) => {
     addComment({ comment: values.comment });
@@ -37,7 +41,7 @@ const CommentForm = (props) => {
             <Input.TextArea allowClear={true} rows={4} />
           </Form.Item>
           <Form.Item>
-            {status !== 'archived' && (
+            {status !== "archived" && (
               <Button htmlType="submit" type="primary">
                 Add Comment
               </Button>
@@ -77,7 +81,12 @@ const LectureComments = (props) => {
     dispatch(deleteComment(courseId, moduleItemId, commentId));
   };
 
-  const getActions = (currentUserId, commentAuthorId, moduleItemId, commentId) => {
+  const getActions = (
+    currentUserId,
+    commentAuthorId,
+    moduleItemId,
+    commentId
+  ) => {
     if (currentUserId === commentAuthorId)
       return [
         <Typography.Text
@@ -93,7 +102,7 @@ const LectureComments = (props) => {
   return (
     <Container>
       <Typography.Title level={4}>Comments</Typography.Title>
-      <div style={{ padding: '0px 8px' }}>
+      <div style={{ padding: "0px 8px" }}>
         {comments.map((comment) => (
           <CustomComment
             key={comment.id}
@@ -101,7 +110,12 @@ const LectureComments = (props) => {
             avatar={comment.user.photo}
             content={comment.comment}
             datetime={DateTime.fromISO(comment.updatedAt).toRelative()}
-            actions={getActions(user._id, comment.user._id, selectedLecture.id, comment.id)}
+            actions={getActions(
+              user._id,
+              comment.user._id,
+              selectedLecture.id,
+              comment.id
+            )}
           />
         ))}
       </div>

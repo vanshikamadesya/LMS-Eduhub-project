@@ -10,7 +10,7 @@ import {
 import QuestionList from './QuestionList'
 
 import { InboxOutlined } from '@ant-design/icons'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 const { Dragger } = Upload
 const { Title } = Typography
