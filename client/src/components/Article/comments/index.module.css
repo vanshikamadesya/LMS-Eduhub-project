@@ -1,0 +1,29 @@
+.iconButton {
+  border: 0px;
+  color: royalblue;
+  margin-top: 15%;
+}
+
+.iconCommentBody {
+  width: 80%;
+  float: left;
+}
+
+.iconCommentRemove {
+  float: right;
+  width: 20%;
+}
+
+.commentCard {
+  margin-bottom: 16px;
+}
+
+.commentItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.deleteButton {
+  color: red;
+}
